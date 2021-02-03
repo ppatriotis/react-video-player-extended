@@ -26,6 +26,7 @@ interface Props {
   markers?: Marker[]
   timeStart?: number
   fps?: number
+  skipToMarkers: boolean
   onPlay?: () => void
   onPause?: () => void
   onVolume?: (volume: number) => void
@@ -60,6 +61,7 @@ function VideoPlayer(props: Props) {
     markers = [],
     timeStart = 0,
     fps = 30,
+    skipToMarkers = false,
     // tslint:disable-next-line: no-empty
     onPlay = () => {},
     // tslint:disable-next-line: no-empty
@@ -212,6 +214,10 @@ function VideoPlayer(props: Props) {
   }
 
   const handleNextFrameClick = () => {
+    if(playerEl.current.skipToMarkers) {
+      // TODO: implement
+    }
+
     console.log(`Moving to next frame with fps: ${fps}`)
     const frameTime = 1 / fps
     playerEl.current.currentTime = Math.min(
@@ -221,6 +227,10 @@ function VideoPlayer(props: Props) {
   }
 
   const handleLastFrameClick = () => {
+    if(playerEl.current.skipToMarkers) {
+      // TODO: implement
+    }
+
     console.log(`Moving to last frame with fps: ${fps}`)
     const frameTime = 1 / fps
     playerEl.current.currentTime = Math.max(0, playerEl.current.currentTime - frameTime)
