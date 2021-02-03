@@ -14,6 +14,7 @@ interface Props {
     markers?: Marker[];
     timeStart?: number;
     fps?: number;
+    skipToMarkers: boolean;
     onPlay?: () => void;
     onPause?: () => void;
     onVolume?: (volume: number) => void;

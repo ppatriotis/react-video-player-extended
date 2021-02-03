@@ -214,7 +214,7 @@ function VideoPlayer(props: Props) {
   }
 
   const handleNextFrameClick = () => {
-    if(playerEl.current.skipToMarkers) {
+    if(skipToMarkers) {
       // TODO: implement
     }
 
@@ -227,7 +227,7 @@ function VideoPlayer(props: Props) {
   }
 
   const handleLastFrameClick = () => {
-    if(playerEl.current.skipToMarkers) {
+    if(skipToMarkers) {
       // TODO: implement
     }
 
