@@ -215,27 +215,51 @@ function VideoPlayer(props: Props) {
 
   const handleNextFrameClick = () => {
     if(skipToMarkers) {
-      alert('SKIP TO NEXT MARKER');
-      // TODO: implement
-    }
-
-    console.log(`Moving to next frame with fps: ${fps}`)
+        var time = 0;
+        for (i = 0; i < markers.length; i++) {
+            if (playerEl.current.currentTime < markers[i].time){
+                time=markers[i].time;
+                break;
+            }
+        }
+        
+        playerEl.current.currentTime = Math.min(
+      playerEl.current.duration,
+      time,
+    )  
+      
+    } else{
+        console.log(`Moving to next frame with fps: ${fps}`)
     const frameTime = 1 / fps
     playerEl.current.currentTime = Math.min(
       playerEl.current.duration,
       playerEl.current.currentTime + frameTime,
-    )
+    )  
+    }
+
+    
   }
 
   const handleLastFrameClick = () => {
     if(skipToMarkers) {
-      alert('SKIP TO LAST MARKER');
-      // TODO: implement
-    }
+      var time = 0;
+        for (i = 0; i < markers.length; i++) {
+            if (playerEl.current.currentTime > markers[markers.length-1-i].time){
+                time=markers[markers.length-1-i].time;
+                break;
+            }
+        }
+        
+        playerEl.current.currentTime = Math.min(
+      playerEl.current.duration,
+      time,
+    )  
+    } else{
 
     console.log(`Moving to last frame with fps: ${fps}`)
     const frameTime = 1 / fps
     playerEl.current.currentTime = Math.max(0, playerEl.current.currentTime - frameTime)
+    }
   }
 
   return (
