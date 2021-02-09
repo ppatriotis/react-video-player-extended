@@ -214,51 +214,49 @@ function VideoPlayer(props: Props) {
   }
 
   const handleNextFrameClick = () => {
-    if(skipToMarkers) {
-        var time = 0;
-        for (i = 0; i < markers.length; i++) {
-            if (playerEl.current.currentTime < markers[i].time){
-                time=markers[i].time;
-                break;
-            }
+    if (skipToMarkers) {
+      var time = 0;
+      for (var i = 0; i < markers.length; i++) {
+        if (playerEl.current.currentTime < markers[i].time) {
+          time = markers[i].time;
+          break;
         }
-        
-        playerEl.current.currentTime = Math.min(
-      playerEl.current.duration,
-      time,
-    )  
-      
-    } else{
-        console.log(`Moving to next frame with fps: ${fps}`)
-    const frameTime = 1 / fps
-    playerEl.current.currentTime = Math.min(
-      playerEl.current.duration,
-      playerEl.current.currentTime + frameTime,
-    )  
-    }
+      }
 
-    
+      if(time === 0) {
+        return;
+      }
+
+      playerEl.current.currentTime = Math.min(playerEl.current.duration, time);
+    } else {
+      console.log(`Moving to next frame with fps: ${fps}`);
+      const frameTime = 1 / fps;
+
+      playerEl.current.currentTime = Math.min(
+        playerEl.current.duration,
+        playerEl.current.currentTime + frameTime
+      );
+    }
   }
 
   const handleLastFrameClick = () => {
-    if(skipToMarkers) {
+    if (skipToMarkers) {
       var time = 0;
-        for (i = 0; i < markers.length; i++) {
-            if (playerEl.current.currentTime > markers[markers.length-1-i].time){
-                time=markers[markers.length-1-i].time;
-                break;
-            }
+      for (var i = markers.length - 1; i >= 0; i--) {
+        if (playerEl.current.currentTime > markers[i].time) {
+          time = markers[i].time;
+          break;
         }
-        
-        playerEl.current.currentTime = Math.min(
-      playerEl.current.duration,
-      time,
-    )  
-    } else{
+      }
 
-    console.log(`Moving to last frame with fps: ${fps}`)
-    const frameTime = 1 / fps
-    playerEl.current.currentTime = Math.max(0, playerEl.current.currentTime - frameTime)
+      playerEl.current.currentTime = Math.min(playerEl.current.duration, time);
+    } else {
+      console.log(`Moving to last frame with fps: ${fps}`);
+      const frameTime = 1 / fps;
+      playerEl.current.currentTime = Math.max(
+        0,
+        playerEl.current.currentTime - frameTime
+      );
     }
   }
 
