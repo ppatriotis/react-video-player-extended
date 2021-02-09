@@ -84,7 +84,7 @@ Prop | Description | Default
 `timeStart` | Set the second number to start playing video | 0
 `url` | The url of a video |
 `fps` | Frame per second | 30
-`skipToMarkers` | Set to `true` so that next & previous buttons skip to markers instead of next frame | false
+`skipToMarkers` | Set to `true` so that next & last frame buttons skip to markers instead of frames | false
 `selectedMarker` | Selected marker | undefined
 `viewSettings` | Array of SettingSelection displaying various video player settings e.g. Title, FPS, Volume, Repeat, Start Time | undefined
 
