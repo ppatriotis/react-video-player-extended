@@ -242,8 +242,9 @@ function VideoPlayer(props: Props) {
   const handleLastFrameClick = () => {
     if (skipToMarkers) {
       var time = 0;
+      var offset = 2;
       for (var i = markers.length - 1; i >= 0; i--) {
-        if (playerEl.current.currentTime > markers[i].time) {
+        if (playerEl.current.currentTime - offset > markers[i].time) {
           time = markers[i].time;
           break;
         }
