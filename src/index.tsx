@@ -80,18 +80,21 @@ function VideoPlayer(props: Props) {
   } = props
 
   useEffect(() => {
-    playerEl.current.addEventListener('timeupdate', handleProgress)
-    playerEl.current.addEventListener('durationchange', handleDurationLoaded)
+    // Captured here because React 17+ runs this cleanup after the ref is
+    // detached, so playerEl.current is null by then.
+    const playerNode = playerEl.current
+    playerNode.addEventListener('timeupdate', handleProgress)
+    playerNode.addEventListener('durationchange', handleDurationLoaded)
     if (timeStart) {
       seekToPlayer()
     }
     if (isPlaying) {
-      playerEl.current.play()
+      playerNode.play()
     }
 
     return () => {
-      playerEl.current.removeEventListener('timeupdate', handleProgress)
-      playerEl.current.removeEventListener('durationchange', handleDurationLoaded)
+      playerNode.removeEventListener('timeupdate', handleProgress)
+      playerNode.removeEventListener('durationchange', handleDurationLoaded)
     }
   }, [])
 
@@ -143,8 +146,11 @@ function VideoPlayer(props: Props) {
     if (duration) {
       setCurrentTime(currentTime)
       const percentage = (100 / duration) * currentTime
-      progressEl.current.value = percentage
-      progressEl.current.innerHTML = percentage + '% played'
+      // A timeupdate can still land between unmount and the effect cleanup.
+      if (progressEl.current) {
+        progressEl.current.value = percentage
+        progressEl.current.innerHTML = percentage + '% played'
+      }
       if (currentTime === duration) {
         onPause()
       }
